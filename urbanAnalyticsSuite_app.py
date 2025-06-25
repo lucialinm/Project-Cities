@@ -298,8 +298,8 @@ def render_predict_tab(listings: pd.DataFrame, city: str) -> None:
 
     col1, col2 = st.columns(2)
     with col1:
-        #lat = st.number_input("Latitude", value=CITY_CENTERS[city][0], format="%f")
-        #lon = st.number_input("Longitude", value=CITY_CENTERS[city][1], format="%f")
+        lat = st.number_input("Latitude", value=CITY_CENTERS[city][0], format="%f")
+        lon = st.number_input("Longitude", value=CITY_CENTERS[city][1], format="%f")
         distance_center = st.slider("Distance to Center (km)", 0.0, 30.0, 5.0, step=0.1)
         min_nights = st.slider("Minimum Nights", 1, 365, 2)
         num_reviews = st.slider("Number of Reviews", 0, 500, 10)
@@ -311,15 +311,14 @@ def render_predict_tab(listings: pd.DataFrame, city: str) -> None:
         area = st.selectbox("Area", listings["neighbourhood_group"].unique())
     
     # Dataframe with the input data
-    input_df = pd.DataFrame([[min_nights, num_reviews, reviews_month,
-                          availability, host_listings, room_type, area]],
-                        columns=["minimum_nights", "number_of_reviews",
-                                 "reviews_per_month", "availability_365",
-                                 "calculated_host_listings_count", "room_type", "neighbourhood_group"])
+       input_df = pd.DataFrame([[lat, lon, min_nights, num_reviews, reviews_month,
+                                  host_listings, availability]],
+                                columns=["latitude", "longitude", "minimum_nights",
+                                         "number_of_reviews", "reviews_per_month",
+                                         "calculated_host_listings_count", "availability_365"])
     # Add new features
-    center = CITY_CENTERS.get(city, (listings["latitude"].median(), listings["longitude"].median()))
-    input_df["distance_center"] = listings.apply(lambda r: geodesic((r.latitude, r.longitude), center).km, axis=1)
-    input_df["reviews_per_listing"] = num_reviews / (host_listings + 1)
+        input_df["distance_center"] = geodesic((lat, lon), st.session_state.city_center).km
+        input_df["reviews_per_listing"] = num_reviews / (host_listings + 1)
 
     # One‑hot manual
     for rt in listings["room_type"].unique():
