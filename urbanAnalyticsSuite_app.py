@@ -298,8 +298,9 @@ def render_predict_tab(listings: pd.DataFrame, city: str) -> None:
 
     col1, col2 = st.columns(2)
     with col1:
-        lat = st.number_input("Latitude", value=CITY_CENTERS[city][0], format="%f")
-        lon = st.number_input("Longitude", value=CITY_CENTERS[city][1], format="%f")
+        #lat = st.number_input("Latitude", value=CITY_CENTERS[city][0], format="%f")
+        #lon = st.number_input("Longitude", value=CITY_CENTERS[city][1], format="%f")
+        distance_center = st.slider("Distance to Center (km)", 0.0, 30.0, 5.0, step=0.1)
         min_nights = st.slider("Minimum Nights", 1, 365, 2)
         num_reviews = st.slider("Number of Reviews", 0, 500, 10)
     with col2:
