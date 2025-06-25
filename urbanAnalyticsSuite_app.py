@@ -232,8 +232,10 @@ def train_price_model(listings: pd.DataFrame, city: str):
      # How far is the listing from the city center?
     center = CITY_CENTERS.get(city, (listings["latitude"].median(), listings["longitude"].median()))
     #center = CITY_CENTERS.get(city, (X["latitude"].median(), X["longitude"].median()))
-    X["distance_center"] = X.apply(lambda r: geodesic((r.latitude, r.longitude), center).km, axis=1)
-    X["reviews_per_listing"] = listings["number_of_reviews"] / (listings["calculated_host_listings_count"] + 1)
+    listings["distance_center"] = listings.apply(lambda r: geodesic((r.latitude, r.longitude), center).km, axis=1)
+    listings["reviews_per_listing"] = listings["number_of_reviews"] / (listings["calculated_host_listings_count"] + 1)
+    #X["distance_center"] = X.apply(lambda r: geodesic((r.latitude, r.longitude), center).km, axis=1)
+    #X["reviews_per_listing"] = listings["number_of_reviews"] / (listings["calculated_host_listings_count"] + 1)
 
     basic_cols = [
         "minimum_nights", "number_of_reviews",
