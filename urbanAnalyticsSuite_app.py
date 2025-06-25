@@ -230,7 +230,8 @@ def render_geo_tab(listings: pd.DataFrame, barrios: gpd.GeoDataFrame, city: str)
 def train_price_model(listings: pd.DataFrame, city: str):
     """Trains an XGBoost model to predict Airbnb prices."""
      # How far is the listing from the city center?
-    center = CITY_CENTERS.get(city, (X["latitude"].median(), X["longitude"].median()))
+    center = CITY_CENTERS.get(city, (listings["latitude"].median(), listings["longitude"].median()))
+    #center = CITY_CENTERS.get(city, (X["latitude"].median(), X["longitude"].median()))
     X["distance_center"] = X.apply(lambda r: geodesic((r.latitude, r.longitude), center).km, axis=1)
     X["reviews_per_listing"] = listings["number_of_reviews"] / (listings["calculated_host_listings_count"] + 1)
 
