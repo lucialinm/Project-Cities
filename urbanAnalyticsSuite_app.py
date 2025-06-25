@@ -353,12 +353,14 @@ def render_predict_tab(listings: pd.DataFrame, city: str) -> None:
             line.set_color(azul_oscuro)
         for i, patch in enumerate(ax.patches):
             contrib = shap_values.values[0][i]
-        if contrib >= 0:
-            patch.set_edgecolor(azul_claro)
-            patch.set_facecolor(azul_claro)
-        else:
-            patch.set_edgecolor(azul_oscuro)
-            patch.set_facecolor(azul_oscuro)
+            if contrib >= 0:
+                patch.set_edgecolor(azul_claro)
+                patch.set_facecolor(azul_claro)
+            else:
+                patch.set_edgecolor(azul_oscuro)
+                patch.set_facecolor(azul_oscuro)
+
+        st.pyplot(fig)
 
         st.pyplot(fig)
     else:
