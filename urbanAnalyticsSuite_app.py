@@ -317,7 +317,7 @@ def render_predict_tab(listings: pd.DataFrame, city: str) -> None:
                                  "reviews_per_month", "availability_365",
                                  "calculated_host_listings_count", "room_type", "neighbourhood_group"])
     # Add new features
-    input_df["distance_center"] = geodesic((lat, lon), st.session_state.city_center).km
+    #input_df["distance_center"] = geodesic((lat, lon), st.session_state.city_center).km
     input_df["reviews_per_listing"] = num_reviews / (host_listings + 1)
 
     # One‑hot manual
