@@ -338,7 +338,7 @@ def render_predict_tab(listings: pd.DataFrame, city: str) -> None:
 
     # If SHAP installed, show feature contributions
     if "shap" in globals():
-        explainer = shap.Explainer(st.session_state.price_model, input_df)
+        explainer = shap.TreeExplainer(st.session_state.price_model)
         shap_values = explainer(input_df)
         st.subheader("Variable Contribution (SHAP)")
         fig, ax = plt.subplots()
