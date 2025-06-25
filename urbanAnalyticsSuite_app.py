@@ -448,7 +448,9 @@ def render_stats_tab(listings: pd.DataFrame, city: str) -> None:
 
 def main() -> None:
     """Main entry point for the Streamlit app."""
-    st.title("Urban Analytics Suite · Airbnbs")
+    st.set_page_config(layout="wide")
+    st.image("imagen.jpg", use_container_width=True)
+    #st.title("Urban Analytics Suite · Airbnbs")
 
    # Select city
     city = st.sidebar.selectbox("Select a city", list(CITIES.keys()))
