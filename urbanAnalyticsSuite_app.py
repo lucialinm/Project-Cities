@@ -230,8 +230,8 @@ def render_geo_tab(listings: pd.DataFrame, barrios: gpd.GeoDataFrame, city: str)
 def train_price_model(listings: pd.DataFrame, city: str):
     """Trains an XGBoost model to predict Airbnb prices."""
     basic_cols = [
-        "latitude", "longitude", "minimum_nights", "number_of_reviews",
-        "reviews_per_month", "calculated_host_listings_count", "availability_365",
+        "minimum_nights", "number_of_reviews",
+        "reviews_per_month", "calculated_host_listings_count", "availability_365","distance_center"
     ]
     X = listings[basic_cols].copy()
     y = listings["price"].astype(float)
@@ -359,9 +359,6 @@ def render_predict_tab(listings: pd.DataFrame, city: str) -> None:
             else:
                 patch.set_edgecolor(azul_oscuro)
                 patch.set_facecolor(azul_oscuro)
-
-        st.pyplot(fig)
-
         st.pyplot(fig)
     else:
         st.info("Install SHAP (pip install shap) to see feature explanations.")
