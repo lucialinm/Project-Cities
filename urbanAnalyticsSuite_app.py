@@ -453,7 +453,8 @@ def main() -> None:
     #st.title("Urban Analytics Suite · Airbnbs")
 
    # Select city
-    city = st.sidebar.selectbox("Select a city", list(CITIES.keys()))
+    city = st.selectbox("Select a city", list(CITIES.keys()))
+    #city = st.sidebar.selectbox("Select a city", list(CITIES.keys()))
     listings, barrios = load_city_data(city)
     if listings.empty or barrios.empty:
         st.warning("No data found for the selected city.")
