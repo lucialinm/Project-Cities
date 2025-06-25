@@ -229,10 +229,6 @@ def render_geo_tab(listings: pd.DataFrame, barrios: gpd.GeoDataFrame, city: str)
 
 def train_price_model(listings: pd.DataFrame, city: str):
     """Trains an XGBoost model to predict Airbnb prices."""
-    basic_cols = [
-        "minimum_nights", "number_of_reviews",
-        "reviews_per_month", "calculated_host_listings_count", "availability_365","distance_center"
-    ]
     X = listings[basic_cols].copy()
     y = listings["price"].astype(float)
 
@@ -248,6 +244,10 @@ def train_price_model(listings: pd.DataFrame, city: str):
     X["distance_center"] = X.apply(lambda r: geodesic((r.latitude, r.longitude), center).km, axis=1)
     X["reviews_per_listing"] = listings["number_of_reviews"] / (listings["calculated_host_listings_count"] + 1)
 
+    basic_cols = [
+        "minimum_nights", "number_of_reviews",
+        "reviews_per_month", "calculated_host_listings_count", "availability_365","distance_center"
+    ]
    # Train-test
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
