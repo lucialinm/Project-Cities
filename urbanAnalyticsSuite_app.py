@@ -304,11 +304,11 @@ def render_predict_tab(listings: pd.DataFrame, city: str) -> None:
         min_nights = st.slider("Minimum Nights", 1, 365, 2)
         num_reviews = st.slider("Number of Reviews", 0, 500, 10)
     with col2:
-    reviews_month = st.slider("Reviews per Month", 0.0, 10.0, 1.0, step=0.1)
-    availability = st.slider("Availability (days/year)", 0, 365, 180)
-    host_listings = st.slider("Host's Number of Listings", 1, 50, 1)
-    room_type = st.selectbox("Room Type", listings["room_type"].unique())
-    area = st.selectbox("Area", listings["neighbourhood_group"].unique())
+        reviews_month = st.slider("Reviews per Month", 0.0, 10.0, 1.0, step=0.1)
+        availability = st.slider("Availability (days/year)", 0, 365, 180)
+        host_listings = st.slider("Host's Number of Listings", 1, 50, 1)
+        room_type = st.selectbox("Room Type", listings["room_type"].unique())
+        area = st.selectbox("Area", listings["neighbourhood_group"].unique())
 
     # Dataframe with the input data
     input_df = pd.DataFrame([[lat, lon, min_nights, num_reviews, reviews_month, host_listings, availability]],
