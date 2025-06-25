@@ -311,13 +311,14 @@ def render_predict_tab(listings: pd.DataFrame, city: str) -> None:
         area = st.selectbox("Area", listings["neighbourhood_group"].unique())
     
     # Dataframe with the input data
-    input_df = pd.DataFrame([[distance_center, min_nights, num_reviews, reviews_month,
+    input_df = pd.DataFrame([[min_nights, num_reviews, reviews_month,
                           availability, host_listings, room_type, area]],
-                        columns=["distance_center", "minimum_nights", "number_of_reviews",
+                        columns=["minimum_nights", "number_of_reviews",
                                  "reviews_per_month", "availability_365",
                                  "calculated_host_listings_count", "room_type", "neighbourhood_group"])
     # Add new features
-    #input_df["distance_center"] = geodesic((lat, lon), st.session_state.city_center).km
+    center = CITY_CENTERS.get(city, (listings["latitude"].median(), listings["longitude"].median()))
+    #input_df["distance_center"] = listings.apply(lambda r: geodesic((r.latitude, r.longitude), center).km, axis=1)
     input_df["reviews_per_listing"] = num_reviews / (host_listings + 1)
 
     # One‑hot manual
